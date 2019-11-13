@@ -16,19 +16,19 @@ create table DICHVU(
 create table NHANVIEN(
 	username varchar(100) PRIMARY KEY,
 	pw varchar(100) NOT NULL,
-	active bit NOT NULL
+	isActive bit NOT NULL,
+	isAdmin bit NOT NULL,
+	isAllowed bit NOT NULL
 )
 
 create table CTNHANVIEN(
 	username varchar(100) NOT NULL REFERENCES NHANVIEN(username),
-	hotdem varchar(50) NOT NULL,
-	ten varchar(10) NOT NULL,
+	ten varchar(100) NOT NULL,
 	phai bit NOT NULL,
 	ngaysinh date NOT NULL,
 	diachi text NOT NULL,
 	sdt varchar(15) NOT NULL UNIQUE,
 	email varchar(100) NOT NULL UNIQUE,
-	hinh text,
 	maBP varchar(30) NOT NULL REFERENCES BOPHAN(maBP)
 )
 
@@ -48,8 +48,7 @@ create table PHONG(
 
 create table KHACH(
 	cmnd varchar(20) PRIMARY KEY,
-	hotdem varchar(50) NOT NULL,
-	ten varchar(10) NOT NULL,
+	ten varchar(100) NOT NULL,
 	diachi text NOT NULL,
 	sdt varchar(15) NOT NULL UNIQUE,
 	email varchar(100) NOT NULL UNIQUE,
@@ -74,6 +73,7 @@ create table PHIEUTHUE(
 	cmnd varchar(20) NOT NULL REFERENCES KHACH(cmnd),
 	username varchar(100) NOT NULL REFERENCES NHANVIEN(username),
 	ngayden date NOT NULL,
+	isPay bit NOT NULL
 )
 
 create table CTPT(
@@ -100,5 +100,5 @@ create table HOADON(
 	tienphong int NOT NULL,
 	tiendv int NOT NULL,
 	tiennhan int NOT NULL,
-	tienthua int NOT NULL,
+	tienthua int NOT NULL
 )
