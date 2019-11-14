@@ -1,14 +1,12 @@
 use QLKS;
 
-insert into NHANVIEN values
-('admin','admin',1,1,0),
-('dong','dong',1,0,0),
-('dai','dai',1,0,0),
-('duc','duc',1,0,0)
-
 insert into BOPHAN values
 ('NVTT','Nhan vien tiep tan'),
-('NVKT','Nhan vien kiem toan')
+('NVKT','Nhan vien kiem toan'),
+('NVQL','Nhan vien quan ly')
+
+insert into NHANVIEN values
+('admin','admin',1,1,0,'God',1,'1-1-1','Vietnam','0935','God@gmail.com','NVQL')
 
 insert into DICHVU values
 ('BF01','Buffet lau 1',100),
