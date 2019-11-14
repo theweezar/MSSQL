@@ -1,4 +1,4 @@
-create database QLKS;
+/*create database QLKS;*/
 
 use QLKS;
 
@@ -86,6 +86,7 @@ create table PHIEUTHUE(
 create table CTPT(
 	maPT nvarchar(50) REFERENCES PHIEUTHUE(maPT),
 	maphong nvarchar(10) REFERENCES PHONG(maphong),
+	maKM nvarchar(100) REFERENCES KHUYENMAI(maKM),
 	PRIMARY KEY(maPT,maphong)
 )
 
