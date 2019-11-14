@@ -18,18 +18,7 @@ create table NHANVIEN(
 	pw nvarchar(100) NOT NULL,
 	isActive bit NOT NULL,
 	isAdmin bit NOT NULL,
-	isAllowed bit NOT NULL
-)
-
-create table KHUYENMAI(
-	maKM nvarchar(100) PRIMARY KEY,
-	ngaybatdau DATE NOT NULL,
-	ngayketthuc DATE NOT NULL,
-	giam int NOT NULL,
-)
-
-create table CTNHANVIEN(
-	username nvarchar(100) NOT NULL REFERENCES NHANVIEN(username),
+	isAllowed bit NOT NULL,
 	ten nvarchar(100) NOT NULL,
 	phai bit NOT NULL,
 	ngaysinh date NOT NULL,
@@ -37,6 +26,13 @@ create table CTNHANVIEN(
 	sdt nvarchar(15) NOT NULL UNIQUE,
 	email nvarchar(100) NOT NULL UNIQUE,
 	maBP nvarchar(30) NOT NULL REFERENCES BOPHAN(maBP)
+)
+
+create table KHUYENMAI(
+	maKM nvarchar(100) PRIMARY KEY,
+	ngaybatdau DATE NOT NULL,
+	ngayketthuc DATE NOT NULL,
+	giam int NOT NULL,
 )
 
 create table HANGPHONG(
