@@ -105,7 +105,7 @@ create table HOADON(
 	tienthua int NOT NULL,
 )
 
-create table BCTNGAY(
+/*create table BCTNGAY(
 	maBCTNgay varchar(30) PRIMARY KEY,
 	maNV varchar(30) NOT NULL REFERENCES NHANVIEN(maNV),
 	doanhthu int NOT NULL,
@@ -139,4 +139,4 @@ create table BCTNAM(
 create table CHITIETBCTNAM(
 	maBCTNam varchar(30) NOT NULL REFERENCES BCTNAM(maBCTNam),
 	maBCTThang varchar(30) NOT NULL UNIQUE REFERENCES BCTTHANG(maBCTThang)
-)
+)*/
