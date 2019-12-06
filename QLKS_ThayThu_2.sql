@@ -76,6 +76,8 @@ create table PHIEUTHUE(
 	cmnd NVARCHAR(20) NOT NULL,
 	maNV INT NOT NULL,
 	ngayden DATE NOT NULL,
+	songayo int NOT NULL,
+	thanhtoan bit NOT NULL
 	/*gioden TIME*/
 )
 
@@ -209,9 +211,9 @@ INSERT INTO HANGPHONG VALUES
 ('SUPER VIP',N'2 giường đôi + Tầng cao nhất',10000)
 
 INSERT INTO PHONG VALUES /* gồm 21 phòng (6 phòng thuộc hạng 1,2,3 - 3 phòng thuộc hạng 4)*/
-(1,1,2),
-(1,1,2),
-(1,1,2),
+(0,1,2),
+(0,1,2),
+(0,1,2),
 (1,1,2),
 (1,1,2),
 (1,1,2),
@@ -228,7 +230,7 @@ INSERT INTO PHONG VALUES /* gồm 21 phòng (6 phòng thuộc hạng 1,2,3 - 3 p
 (1,3,4),
 (1,3,4),
 (1,4,4),
-(1,4,4),
+(0,4,4),
 (1,4,4)
 
 INSERT INTO KHACH VALUES
@@ -254,8 +256,8 @@ INSERT INTO CTPD VALUES
 ('2',2,1)
 
 INSERT INTO PHIEUTHUE VALUES
-('001',1,'2019-11-18'),
-('004',1,'2019-11-18')
+('001',1,'2019-11-18',3,0),
+('004',1,'2019-11-18',5,0)
 
 INSERT INTO CTPT VALUES
 (1,1,null),
@@ -272,7 +274,6 @@ INSERT INTO DICHVU VALUES
 INSERT INTO CTPDV VALUES
 (1,1,2,'2019-11-18','19:55',2),
 (2,20,4,'2019-11-19','19:00',2)
-
 
 INSERT INTO KHUYENMAI VALUES
 ('QWERTY',10)
@@ -294,11 +295,16 @@ go
 declare @cmndCheckout NVARCHAR(100) = '004'
 declare @checkoutDay DATE = '2019-11-20'
 
-/* Truy xuất giá tiền phòng */
-select * from PHONG join HANGPHONG on PHONG.maHP = HANGPHONG.maHP where PHONG.maphong in 
-(select maphong from CTPT join PHIEUTHUE on CTPT.maPT = PHIEUTHUE.maPT
-where PHIEUTHUE.cmnd = '004')
+/* Truy xuất giá tiền phòng - sum(gia * songayo) */
+select gia,songayo as TONGTIENPHONG from 
+(select gia,maphong from PHONG join HANGPHONG on PHONG.maHP = HANGPHONG.maHP) as P
+join
+(select PHIEUTHUE.songayo, CTPT.maphong from CTPT join PHIEUTHUE on CTPT.maPT = PHIEUTHUE.maPT
+where PHIEUTHUE.cmnd = '004') as PT on P.maphong = PT.maphong
 
 /* Truy xuất giá tiền dịch vụ */
-select gia * soluong from DICHVU join CTPDV on DICHVU.maDV = CTPDV.maDV where CTPDV.maPT in(
+select gia * soluong as TONGTIENDV from DICHVU join CTPDV 
+on DICHVU.maDV = CTPDV.maDV where CTPDV.maPT in(
 select maPT from PHIEUTHUE where PHIEUTHUE.cmnd = '004')
+
+/* Viết lại */
