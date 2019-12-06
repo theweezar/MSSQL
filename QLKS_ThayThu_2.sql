@@ -1,4 +1,6 @@
-﻿use QLKS
+﻿/*create database QLKS*/
+
+use QLKS
 
 /* Phần tạo table - chưa có liên kết khóa ngoại */
 
@@ -85,7 +87,7 @@ create table CTPT(
 
 create table DICHVU(
 	maDV INT PRIMARY KEY IDENTITY(1,1),
-	tenDV text NOT NULL,
+	tenDV NVARCHAR(100) NOT NULL,
 	gia INT NOT NULL
 )
 
@@ -116,6 +118,42 @@ create table HOADON(
 	tiennhan INT NOT NULL,
 	tienthua INT NOT NULL,
 )
+
+/*create table BCTNGAY(
+	maBCTNgay varchar(30) PRIMARY KEY,
+	maNV varchar(30) NOT NULL REFERENCES NHANVIEN(maNV),
+	doanhthu int NOT NULL,
+	ngaylap date NOT NULL
+)
+
+create table CHITIETBCTNGAY(
+	maBCTNgay varchar(30) NOT NULL REFERENCES BCTNGAY(maBCTNgay),
+	maHD varchar(50) NOT NULL UNIQUE REFERENCES HOADON(maHD)
+)
+
+create table BCTTHANG(
+	maBCTThang varchar(30) PRIMARY KEY,
+	maNV varchar(30) NOT NULL REFERENCES NHANVIEN(maNV),
+	doanhthu int NOT NULL,
+	ngaylap date NOT NULL
+)
+
+create table CHITIETBCTTHANG(
+	maBCTThang varchar(30) NOT NULL REFERENCES BCTTHANG(maBCTThang),
+	maBCTNgay varchar(30) NOT NULL UNIQUE REFERENCES BCTNGAY(maBCTNgay)
+)
+
+create table BCTNAM(
+	maBCTNam varchar(30) PRIMARY KEY,
+	maNV varchar(30) NOT NULL REFERENCES NHANVIEN(maNV),
+	doanhthu int NOT NULL,
+	ngaylap date NOT NULL
+)
+
+create table CHITIETBCTNAM(
+	maBCTNam varchar(30) NOT NULL REFERENCES BCTNAM(maBCTNam),
+	maBCTThang varchar(30) NOT NULL UNIQUE REFERENCES BCTTHANG(maBCTThang)
+)*/
 
 /* Tạo mối liên kết khóa ngoại */
 
@@ -222,16 +260,45 @@ INSERT INTO PHIEUTHUE VALUES
 INSERT INTO CTPT VALUES
 (1,1,null),
 (2,2,null),
+(2,3,null),
 (2,20,null)
 
 INSERT INTO DICHVU VALUES
-('Spa',2500),
-('Cà phê đen',250),
-('Cà phê sữa',300),
-('Rượu Vang',1500)
+(N'Spa',2500),
+(N'Cà phê đen',250),
+(N'Cà phê sữa',300),
+(N'Rượu Vang',1500)
 
 INSERT INTO CTPDV VALUES
-(1,1,2,'2019-11-18','19:55',2)
+(1,1,2,'2019-11-18','19:55',2),
+(2,20,4,'2019-11-19','19:00',2)
+
 
 INSERT INTO KHUYENMAI VALUES
 ('QWERTY',10)
+
+INSERT INTO CTPHONG VALUES
+(1,'001'),
+(1,'002'),
+(2,'004'),
+(2,'005'),
+(3,'003'),
+(3,'012'),
+(20,'006'),
+(20,'007'),
+(20,'008')
+
+/*Tạo hóa đơn*/
+/* Cho trước 1 cmnd của khách muốn checkout và 1 ngày khách checkout */
+go
+declare @cmndCheckout NVARCHAR(100) = '004'
+declare @checkoutDay DATE = '2019-11-20'
+
+/* Truy xuất giá tiền phòng */
+select * from PHONG join HANGPHONG on PHONG.maHP = HANGPHONG.maHP where PHONG.maphong in 
+(select maphong from CTPT join PHIEUTHUE on CTPT.maPT = PHIEUTHUE.maPT
+where PHIEUTHUE.cmnd = '004')
+
+/* Truy xuất giá tiền dịch vụ */
+select gia * soluong from DICHVU join CTPDV on DICHVU.maDV = CTPDV.maDV where CTPDV.maPT in(
+select maPT from PHIEUTHUE where PHIEUTHUE.cmnd = '004')
