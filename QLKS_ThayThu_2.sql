@@ -156,19 +156,19 @@ ALTER TABLE HOADON ADD FOREIGN KEY (maNV) REFERENCES NHANVIEN(maNV)
 /* Insert Data cho CSDL*/
 
 INSERT INTO BOPHAN VALUES
-('Nhân viên tiếp tân'),
-('Nhân viên kết toán')
+(N'Nhân viên tiếp tân'),
+(N'Nhân viên kết toán')
 
 INSERT INTO NHANVIEN VALUES
-('Hoàng Phan Minh','Đức',1,'0935723714','hpmd@gmail.com',1),
-('Phan','Đại',1,'090909090','dai@gmail.com',1),
-('Dương Trực','Đông',1,'090808090','dong@gmail.com',2)
+(N'Hoàng Phan Minh',N'Đức',1,'0935723714','hpmd@gmail.com',1),
+(N'Phan',N'Đại',1,'090909090','dai@gmail.com',1),
+(N'Dương Trực',N'Đông',1,'090808090','dong@gmail.com',2)
 
 INSERT INTO HANGPHONG VALUES
-('Normal','1 giường đôi',1000),
-('Normal','2 giường đôi',2000),
-('VIP','2 giường đôi + 1 TV 50 inc',2500),
-('SUPER VIP','2 giường đôi + Tầng cao nhất',10000)
+('Normal',N'1 giường đôi',1000),
+('Normal',N'2 giường đôi',2000),
+('VIP',N'2 giường đôi + 1 TV 50 inc',2500),
+('SUPER VIP',N'2 giường đôi + Tầng cao nhất',10000)
 
 INSERT INTO PHONG VALUES /* gồm 21 phòng (6 phòng thuộc hạng 1,2,3 - 3 phòng thuộc hạng 4)*/
 (1,1,2),
@@ -194,18 +194,18 @@ INSERT INTO PHONG VALUES /* gồm 21 phòng (6 phòng thuộc hạng 1,2,3 - 3 p
 (1,4,4)
 
 INSERT INTO KHACH VALUES
-('001','Nhật','Anh','010','Anh@gmail.com'),
-('002','Minh','Nhật','022','nhat@gmail.com'),
-('003','Đức','Minh','033','minh@gmail.com'),
-('004','Cường','Dollar','044','dollar@gmail.com'),
-('005','Tim','Cook','055','cook@gmail.com'),
-('006','Steve','Job','066','job@gmail.com'),
-('007','Donald','Trump','077','trump@gmail.com'),
-('008','Maria','Ozawa','088','jav@gmail.com'),
-('009','Bill','Gate','099','gate@gmail.com'),
-('010','Nhật','Cường','012','cuong@gmail.com'),
-('011','Dore','Mon','016','mon@gmail.com'),
-('012','Hồ Ngọc','Hà','091','ha@gmail.com')
+('001',N'Nhật',N'Anh','010','Anh@gmail.com'),
+('002',N'Minh',N'Nhật','022','nhat@gmail.com'),
+('003',N'Đức',N'Minh','033','minh@gmail.com'),
+('004',N'Cường',N'Dollar','044','dollar@gmail.com'),
+('005',N'Tim',N'Cook','055','cook@gmail.com'),
+('006',N'Steve',N'Job','066','job@gmail.com'),
+('007',N'Donald',N'Trump','077','trump@gmail.com'),
+('008',N'Maria',N'Ozawa','088','jav@gmail.com'),
+('009',N'Bill',N'Gate','099','gate@gmail.com'),
+('010',N'Nhật',N'Cường','012','cuong@gmail.com'),
+('011',N'Dore',N'Mon','016','mon@gmail.com'),
+('012',N'Hồ Ngọc',N'Hà','091','ha@gmail.com')
 
 INSERT INTO PHIEUDAT VALUES
 ('001','2019-11-18','2019-11-25'),
