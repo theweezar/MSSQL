@@ -289,22 +289,32 @@ INSERT INTO CTPHONG VALUES
 (20,'007'),
 (20,'008')
 
-/*Tạo hóa đơn*/
-/* Cho trước 1 cmnd của khách muốn checkout và 1 ngày khách checkout */
-go
-declare @cmndCheckout NVARCHAR(100) = '004'
-declare @checkoutDay DATE = '2019-11-20'
-
-/* Truy xuất giá tiền phòng - sum(gia * songayo) */
-select gia,songayo as TONGTIENPHONG from 
+/* Truy xuất giá tiền phòng - sum(gia * songayo) as TONGTIENPHONG */
+select gia,songayo from 
 (select gia,maphong from PHONG join HANGPHONG on PHONG.maHP = HANGPHONG.maHP) as P
 join
 (select PHIEUTHUE.songayo, CTPT.maphong from CTPT join PHIEUTHUE on CTPT.maPT = PHIEUTHUE.maPT
 where PHIEUTHUE.cmnd = '004') as PT on P.maphong = PT.maphong
 
-/* Truy xuất giá tiền dịch vụ */
-select gia * soluong as TONGTIENDV from DICHVU join CTPDV 
+/* Truy xuất giá tiền dịch vụ - sum(gia * soluong) as TONGTIENDV */
+select gia, soluong from DICHVU join CTPDV 
 on DICHVU.maDV = CTPDV.maDV where CTPDV.maPT in(
 select maPT from PHIEUTHUE where PHIEUTHUE.cmnd = '004')
 
-/* Viết lại */
+/* Viết Proc tính tiền - nó có thể báo sai gạch đỏ là vì mình phải tạo riêng trong file khác,
+cứ quét nó xong r run vẫn được */
+
+/*Câu 1: Liệt kê thông tin về 1 phiếu đặt phòng dựa vào số CMND người đặt, ngày đặt
+(số phiếu đặt, hạng phòng, số lượng phòng,  giá*/
+create proc SP_LIETKE_THONGTIN_PHIEUDAT @CMND nvarchar(20), @NGAYDAT date
+as
+select * from
+(select PHIEUDAT.*, maHP, sl_dat from PHIEUDAT join CTPD on PHIEUDAT.maPD = CTPD.maPD
+where cmnd = @CMND and ngaybatdau = @NGAYDAT) as PD
+join HANGPHONG on HANGPHONG.maHP = PD.maHP
+go
+
+drop proc SP_LIETKE_THONGTIN_PHIEUDAT
+
+exec SP_LIETKE_THONGTIN_PHIEUDAT '001','2019-11-18'
+
